@@ -1,24 +1,40 @@
 import { useState } from "react";
 
 function App() {
-  const [bill, setBill] = useState("");
-  const [people, setPeople] = useState(1);
-  const [tipPercent, setTipPercent] = useState(0);
+  const [formData, setFormData] = useState({
+    bill: "",
+    people: 1,
+    tipPercent: 0,
+  });
   const [selectedId, setSelectedId] = useState(null);
 
+  const handleChange = (key) => (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+  };
+
   const handleTipClick = (tip) => {
-    setTipPercent(tip);
+    setFormData((prevData) => ({
+      ...prevData,
+      tipPercent: tip,
+    }));
     setSelectedId(tip !== selectedId ? tip : null);
   };
+
+  const { bill, people, tipPercent } = formData;
 
   const tip = (Number(bill) * tipPercent) / 100;
   const total = ((Number(bill) || 0) + tip) / people;
   const tipAmount = tip / people;
 
   const handleReset = () => {
-    setBill("");
-    setPeople(1);
-    setTipPercent(0);
+    setFormData({
+      bill: "",
+      people: 1,
+      tipPercent: 0,
+    });
   };
 
   return (
@@ -28,11 +44,8 @@ function App() {
       </h1>
       <div className="bg-white p-7 rounded-md flex flex-col items-center justify-center gap-7 md:flex-row">
         <Calculator
-          onSetBill={setBill}
-          bill={bill}
-          onSetPeople={setPeople}
-          people={people}
-          tipPercent={tipPercent}
+          formData={formData}
+          handleChange={handleChange}
           handleTipClick={handleTipClick}
           selectedId={selectedId}
         />
@@ -49,30 +62,21 @@ function App() {
 
 export default App;
 
-function Calculator({
-  onSetBill,
-  bill,
-  onSetPeople,
-  people,
-  handleTipClick,
-  selectedId,
-}) {
+function Calculator({ formData, handleChange, handleTipClick, selectedId }) {
   return (
     <div className="flex flex-col md:w-1/2">
       <CustomerInput
         title="Bill"
         imgSrc="images/icon-dollar.svg"
-        onChange={(e) =>
-          onSetBill(e.target.value ? parseFloat(e.target.value) : 0)
-        }
-        value={bill}
+        onChange={handleChange("bill")}
+        value={formData.bill}
       />
       <Tips handleTipClick={handleTipClick} selectedId={selectedId} />
       <CustomerInput
         title="Number of People"
         imgSrc="images/icon-person.svg"
-        onChange={(e) => onSetPeople(e.target.value)}
-        value={people}
+        onChange={handleChange("people")}
+        value={formData.people}
       />
     </div>
   );
@@ -84,9 +88,9 @@ function CustomerInput({ title, imgSrc, onChange, value }) {
       <label className="text-sm text-grayishCyan">{title}</label>
       <input
         type="number"
-        className="bg-lightCyan text-right text-veryDarkCyan "
+        className="bg-lightCyan text-right text-veryDarkCyan"
         placeholder="0"
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value || 0)}
         value={value}
         step="any"
       />
