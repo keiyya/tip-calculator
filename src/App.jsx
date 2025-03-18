@@ -39,10 +39,10 @@ function App() {
 
   return (
     <main>
-      <h1 className="uppercase text-darkGrayishCyan font-bold text-center">
+      <h1 className="uppercase text-darkGrayishCyan font-bold text-center mb-10">
         Spli <br /> tter
       </h1>
-      <div className="bg-white p-7 rounded-md flex flex-col items-center justify-center gap-7 md:flex-row">
+      <div className="bg-white p-7 rounded-md flex flex-col items-center justify-center gap-7 mx-6 md:flex-row max-w-[900px]">
         <Calculator
           formData={formData}
           handleChange={handleChange}
@@ -113,7 +113,7 @@ function Tips({ handleTipClick, selectedId }) {
   return (
     <div>
       <h2 className="text-sm text-darkGrayishCyan my-2">Select Tip%</h2>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
         {[5, 10, 15, 20, 25].map((tip) => (
           <Button
             key={tip}
@@ -138,7 +138,7 @@ function Button({ value, onClick, selectedId }) {
     <button
       className={
         value === selectedId
-          ? `bg-strongCyan text-veryDarkCyan px-5 py-1 rounded-md hover:bg-veryDarkCyan hover:text-white`
+          ? `bg-strongCyan text-veryDarkCyan px-5 py-1 rounded-md`
           : `bg-veryDarkCyan text-white px-5 py-1 rounded-md hover:bg-strongCyan hover:text-veryDarkCyan`
       }
       onClick={onClick}
@@ -150,7 +150,7 @@ function Button({ value, onClick, selectedId }) {
 
 function Display({ total, onReset, tip }) {
   return (
-    <div className="bg-veryDarkCyan text-white flex flex-col p-6 rounded-md md:w-1/2">
+    <div className="bg-veryDarkCyan text-white flex flex-col p-6 rounded-md w-full md:w-1/2">
       <div>
         <Amount title="Tip Amount" bill={tip} />
         <Amount title="Total" bill={total} />
