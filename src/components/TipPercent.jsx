@@ -24,9 +24,8 @@ export function TipPercent({
           </li>
         ))}
         <input
-          type="text"
+          type="number"
           placeholder="Custom"
-          value={0}
           className="text-right bg-myGrey50 rounded-md outline-myGreen400 cursor-pointer pr-2 text-myGreen900 hover:outline-3"
           onChange={(e) => onTipChange(Number(e.target.value))}
           onFocus={onCustomTipFocus}

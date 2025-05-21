@@ -3,7 +3,7 @@ export function Input({ title, imageSrc, value, onHandleChange, placeholder }) {
     <div className="flex flex-col gap-1 relative">
       <label className="text-myGrey500 text-sm">{title}</label>
       <input
-        type="text"
+        type="number"
         value={value}
         onChange={onHandleChange}
         placeholder={value ? "" : placeholder}
